@@ -1,0 +1,4 @@
+org\mybatis\study\entity\User.class
+org\mybatis\study\mapper\UserMapper.class
+org\mybatis\study\App.class
+org\mybatis\study\plugins\ExamplePlugin.class
