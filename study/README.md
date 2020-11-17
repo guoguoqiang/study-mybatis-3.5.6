@@ -98,6 +98,8 @@ https://mybatis.org/mybatis-3/zh/configuration.html#mappers
 
         // 方式二、 mybatis3 之后 接口绑定方式  （这个坑比较深，目录要一个一个创建）
         // (resource 下面的路径要和 接口包 路径一致 org.mybatis.study.mapper 这个路径不能直接使用.要一个文件夹一个文件夹的创建)
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        User user = mapper.selectById(1L);
 ```
 
 ## 5、核心配置文件mybatis-config.xml中配置mappers的几种方式
@@ -117,6 +119,6 @@ https://mybatis.org/mybatis-3/zh/configuration.html#mappers
     
  <!--方式4 mapper url="文件路径名" 不推荐
              引用网路路径或者磁盘路径下的sql映射文件 file:///var/mappers/AuthorMapper.xml -->
-  <mapper url="file:D:/my_project/mybatis-3-mybatis-3.5.6/study/src/main/resources/org/mybatis/study/mapper/UserMapper.xml"/>
+  <!--<mapper url="file:D:/my_project/mybatis-3-mybatis-3.5.6/study/src/main/resources/org/mybatis/study/mapper/UserMapper.xml"/>-->
   </mappers>
 ```
