@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!--properties 扫描属性文件.properties  -->
+  <properties resource="db.properties"></properties>
+
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+  <!-- <plugins>
+       <plugin interceptor="com.tuling.plugins.ExamplePlugin" ></plugin>
+   </plugins>-->
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <!--//  mybatis内置了JNDI、POOLED、UNPOOLED三种类型的数据源,其中POOLED对应的实现为org.apache.ibatis.datasource.pooled.PooledDataSource,它是mybatis自带实现的一个同步、线程安全的数据库连接池 一般在生产中,我们会使用c3p0或者druid连接池-->
+      <dataSource type="POOLED">
+        <property name="driver" value="${mysql.driverClass}"/>
+        <property name="url" value="${mysql.jdbcUrl}"/>
+        <property name="username" value="${mysql.user}"/>
+        <property name="password" value="${mysql.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+
+  <mappers>
+    <!--方式1  mybatis3之前（ibatis）-->
+    <!-- <mapper resource="mapper/UserMapper.xml"/>-->
+
+    <!--方式2 mybatis3及以后接口绑定方式 -->
+    <!-- <mapper class="org.mybatis.study.mapper.UserMapper"></mapper>-->
+
+    <!--方式3 包扫描方式 -->
+    <package name="org.mybatis.study.mapper"/>
+
+    <!--方式4 url="文件路径名" 不推荐 -->
+   <!-- <mapper url="file:D:/my_project/mybatis-3-mybatis-3.5.6/study/src/main/resources/org/mybatis/study/mapper/UserMapper.xml"/>-->
+  </mappers>
+</configuration>
+
+
