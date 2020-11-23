@@ -153,14 +153,18 @@ public class ParamNameResolver {
    * @since 3.5.5
    */
   public static Object wrapToMapIfCollection(Object object, String actualParamName) {
+    //若我们的参数类型是Collection
     if (object instanceof Collection) {
       ParamMap<Object> map = new ParamMap<>();
+      //把他key为collection存放到map中
       map.put("collection", object);
+      //若我们参数类型是list类型  把key为list作为集合存放到map中
       if (object instanceof List) {
         map.put("list", object);
       }
       Optional.ofNullable(actualParamName).ifPresent(name -> map.put(name, object));
       return map;
+      //若是数组，存放key为array的map中
     } else if (object != null && object.getClass().isArray()) {
       ParamMap<Object> map = new ParamMap<>();
       map.put("array", object);

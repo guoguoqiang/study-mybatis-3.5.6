@@ -12,7 +12,7 @@
     <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
   <!-- <plugins>
-       <plugin interceptor="xxx.ExamplePlugin" ></plugin>
+       <plugin interceptor="org.mybatis.study.plugins.ExamplePlugin" ></plugin>
    </plugins>-->
   <environments default="development">
     <environment id="development">

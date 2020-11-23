@@ -3,13 +3,16 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <!--properties 扫描属性文件.properties  -->
-  <properties resource="db.properties"></properties>
+  <properties resource="db.properties">
+    <!--<property name="username" value="root"/>-->
+    <!--<property name="password" value="123456"/>-->
+  </properties>
 
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
   <!-- <plugins>
-       <plugin interceptor="com.tuling.plugins.ExamplePlugin" ></plugin>
+       <plugin interceptor="org.mybatis.study.plugins.ExamplePlugin" ></plugin>
    </plugins>-->
   <environments default="development">
     <environment id="development">
@@ -36,7 +39,7 @@
     <package name="org.mybatis.study.mapper"/>
 
     <!--方式4 url="文件路径名" 不推荐 -->
-   <!-- <mapper url="file:D:/my_project/mybatis-3-mybatis-3.5.6/study/src/main/resources/org/mybatis/study/mapper/UserMapper.xml"/>-->
+    <!-- <mapper url="file:D:/my_project/mybatis-3-mybatis-3.5.6/study/src/main/resources/org/mybatis/study/mapper/UserMapper.xml"/>-->
   </mappers>
 </configuration>
 

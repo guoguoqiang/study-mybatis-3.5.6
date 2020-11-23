@@ -668,16 +668,27 @@ public class Configuration {
     executorType = executorType == null ? defaultExecutorType : executorType;
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
     Executor executor;
+    /**
+     * 判断执行器的类型
+     * 批量的执行器
+     */
     if (ExecutorType.BATCH == executorType) {
       executor = new BatchExecutor(this, transaction);
     } else if (ExecutorType.REUSE == executorType) {
+      //可重复使用的执行器
       executor = new ReuseExecutor(this, transaction);
     } else {
+      //简单的sql执行器对象
       executor = new SimpleExecutor(this, transaction);
     }
+    //判断mybatis的全局配置文件是否开启缓存
     if (cacheEnabled) {
+      //把当前的简单的执行器包装成一个CachingExecutor
       executor = new CachingExecutor(executor);
     }
+    /**
+     * TODO:调用所有的拦截器对象plugin方法
+     */
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }

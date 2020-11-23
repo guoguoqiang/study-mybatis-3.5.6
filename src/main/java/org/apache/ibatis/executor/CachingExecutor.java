@@ -1,17 +1,17 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright ${license.git.copyrightYears} the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.executor;
 
@@ -84,6 +84,9 @@ public class CachingExecutor implements Executor {
 
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+    /**
+     * 通过参数对象解析我们的sql详细信息
+     */
     BoundSql boundSql = ms.getBoundSql(parameterObject);
     CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
     return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
@@ -91,21 +94,38 @@ public class CachingExecutor implements Executor {
 
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
-      throws SQLException {
+    throws SQLException {
+    /**
+     * 判断我们我们的mapper中是否开启了二级缓存<cache></cache>
+     */
     Cache cache = ms.getCache();
+    /**
+     * 判断是否配置了cache
+     */
     if (cache != null) {
+      //判断是否需要刷新缓存
       flushCacheIfRequired(ms);
+
       if (ms.isUseCache() && resultHandler == null) {
         ensureNoOutParams(ms, boundSql);
         @SuppressWarnings("unchecked")
-        List<E> list = (List<E>) tcm.getObject(cache, key);
+        /**
+         * 先去二级缓存中获取
+         */
+          List<E> list = (List<E>) tcm.getObject(cache, key);
+        /**
+         * 二级缓存中没有获取到
+         */
         if (list == null) {
+          //通过查询数据库去查询
           list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          //加入到二级缓存中
           tcm.putObject(cache, key, list); // issue #578 and #116
         }
         return list;
       }
     }
+    //没有整合二级缓存,直接去查询
     return delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
   }
 

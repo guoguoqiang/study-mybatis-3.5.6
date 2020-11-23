@@ -47,13 +47,13 @@ public class App {
       SqlSession session = sqlMapper.openSession();
       try {
         // 方式一、 mybatis3 之前方式(ibatis)  namespace + selectById
-//        User user = (User) session.selectOne("org.mybatis.study.mapper.UserMapper.selectById", 1L );
+        User user = (User) session.selectOne("org.mybatis.study.mapper.UserMapper.selectById", 1L );
 
         // 方式二、 mybatis3 之后 接口绑定方式
         // (resource 下面的路径要和 接口包 路径一致 org.mybatis.study.mapper 这个路径不能直接使用.要一个文件夹一个文件夹的创建)
-        UserMapper mapper = session.getMapper(UserMapper.class);
-        System.out.println(mapper.getClass());
-        User user = mapper.selectById(1L);
+//        UserMapper mapper = session.getMapper(UserMapper.class);
+//        System.out.println(mapper.getClass());
+//        User user = mapper.selectById(1L);
         session.commit();
         System.out.println(user.getUserName());
       } catch (Exception e) {
