@@ -145,7 +145,7 @@
     <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
-      <version>3.2.15</version>
+      <version>3.2.21</version>
       <scope>compile</scope>
       <!-- 当其他项目继承本项目时，如果dependences中加上了<optional>true</optional>，表示当前依赖不向下传递。-->
     <!--  <optional>true</optional>-->
